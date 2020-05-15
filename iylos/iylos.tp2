@@ -1,0 +1,280 @@
+// --------------------------------------------
+// Mod setup
+// --------------------------------------------
+// Basics
+BACKUP ~iylos/backup~
+AUTHOR ~Liam Esler (K'aeloree) - kae@spellholdstudios.net~
+ASK_EVERY_COMPONENT
+// Version
+VERSION ~2.5~
+// Readme
+README ~iylos/iylos_readme.html~
+
+// Translations
+AUTO_TRA ~iylos/translations/%s~
+
+LANGUAGE ~English~
+         ~english~
+         ~iylos/translations/english/setup.tra~
+
+// --------------------------------------------
+// Iylos NPC Mod
+// --------------------------------------------
+// Component setup
+BEGIN @1
+  REQUIRE_PREDICATE GAME_IS ~tob bg2ee bgt~ @88
+
+    
+    // Adds custom IsValidForPartyDialogue state used throughout Iylos
+    APPEND ~STATE.IDS~ // adds custom IsValidForPartyDialogue state
+      ~0x80101FEF CD_STATE_NOTVALID~
+      UNLESS ~CD_STATE_NOTVALID~
+
+
+    // Appending gtimes.ids to include the timer
+    APPEND ~gtimes.ids~ ~3600 IYLOS_TIMER~
+    UNLESS ~IYLOS_TIMER~
+
+
+    // Compiling dialogue
+    COMPILE ~iylos/dialogue/lk#iylo.d~
+    COMPILE ~iylos/dialogue/blk#iyl.d~
+    COMPILE ~iylos/dialogue/lk#iylj.d~
+    COMPILE ~iylos/dialogue/lk#iylp.d~
+    COMPILE ~iylos/dialogue/imoen25j.d~
+
+    
+    // Ascension crossmod dialogue
+    ACTION_IF FILE_EXISTS_IN_GAME ~irenic2.dlg~ THEN BEGIN
+      COMPILE ~iylos/dialogue/crossmod/ascension.d~
+    END
+    
+    
+    // Compiling other scripts
+    COMPILE ~iylos/scripts/lk#icut.baf~
+    COMPILE ~iylos/scripts/lk#iylo.baf~
+    EXTEND_TOP ~ar6200.bcs~ ~iylos/scripts/ar6200.baf~
+    EXTEND_BOTTOM ~ar5003.bcs~ ~iylos/scripts/ar5003.baf~
+    EXTEND_BOTTOM ~imoe25.bcs~ ~iylos/scripts/imoe25.baf~
+
+
+    // Copying items
+    COPY ~iylos/items/lk#iamul.itm~ ~override~ // Amulet of Tranquillity
+      SAY NAME1 @2
+      SAY NAME2 @2
+      SAY UNIDENTIFIED_DESC @3
+      SAY DESC @4
+    
+    COPY ~iylos/items/lk#ibelt.itm~ ~override~ // Belt of Storage
+      SAY NAME1 @5
+      SAY NAME2 @5
+      SAY UNIDENTIFIED_DESC @6
+      SAY DESC @6
+    
+    COPY ~iylos/items/lk#ibelt.sto~ ~override~
+    
+    COPY ~iylos/items/lk#iboot.itm~ ~override~ // Boots of the Nomad
+      SAY NAME1 @7
+      SAY NAME2 @7
+      SAY UNIDENTIFIED_DESC @8
+      SAY DESC @9
+    
+    COPY ~iylos/items/lk#ibrac.itm~ ~override~ // Bracers of the Coiling Serpent
+      SAY NAME1 @10
+      SAY NAME2 @10
+      SAY UNIDENTIFIED_DESC @11
+      SAY DESC @12
+    
+    COPY ~iylos/items/lk#iclck.itm~ ~override~ // Cloak of the Deserts
+      SAY NAME1 @13
+      SAY NAME2 @13
+      SAY UNIDENTIFIED_DESC @14
+      SAY DESC @14
+    
+    COPY ~iylos/items/lk#igem1.itm~ ~override~ // Meditative Crystal
+      SAY NAME1 @15
+      SAY NAME2 @15
+      SAY UNIDENTIFIED_DESC @16
+      SAY DESC @17
+    
+    COPY ~iylos/items/lk#ihood.itm~ ~override~ // Aegis of the Deserts
+      SAY NAME1 @18
+      SAY NAME2 @18
+      SAY UNIDENTIFIED_DESC @19
+      SAY DESC @19
+    
+    COPY ~iylos/items/lk#ilet1.itm~ ~override~ // Sealed Letter
+      SAY NAME1 @20
+      SAY NAME2 @20
+      SAY UNIDENTIFIED_DESC @21
+      SAY DESC @21
+    
+    COPY ~iylos/items/lk#ilet2.itm~ ~override~ // Letter from Balthazar
+      SAY NAME1 @22
+      SAY NAME2 @22
+      SAY UNIDENTIFIED_DESC @23
+      SAY DESC @23
+    
+    COPY ~iylos/items/lk#iring.itm~ ~override~ // Sandstone Ring
+      SAY NAME1 @24
+      SAY NAME2 @24
+      SAY UNIDENTIFIED_DESC @25
+    
+    COPY ~iylos/items/lk#irobe.itm~ ~override~ // Monastic Robe
+      SAY NAME1 @26
+      SAY NAME2 @26
+      SAY UNIDENTIFIED_DESC @27
+      SAY DESC @28
+    
+    
+    //Copying images and creatures
+    COPY ~iylos/images~ ~override~
+    
+    ACTION_IF GAME_IS ~bg2ee~ BEGIN
+      COPY ~iylos/portrait/ee~ ~override~
+    END ELSE BEGIN
+      COPY ~iylos/portrait/bg2~ ~override~
+    END
+
+    COPY ~iylos/creatures/lk#iylos.cre~ ~override~
+      SAY NAME1 @29
+      SAY NAME2 @29
+      WRITE_EVALUATED_ASCII DIALOG          ~LK#IYLO~ #8
+      WRITE_EVALUATED_ASCII DEATHVAR        ~iylos~ #32
+      WRITE_EVALUATED_ASCII SCRIPT_OVERRIDE ~LK#IYLO~ #8
+      SAY BIO @30
+      SAY MORALE @31
+      SAY HAPPY @32
+      SAY UNHAPPY_ANNOYED @33
+      SAY UNHAPPY_SERIOUS @34
+      SAY UNHAPPY_BREAKING @35
+      SAY LEADER @36
+      SAY TIRED @37
+      SAY BORED @38
+      SAY BATTLE_CRY1 @39
+      SAY BATTLE_CRY2 @40
+      SAY BATTLE_CRY3 @41
+      SAY BATTLE_CRY4 @42
+      SAY DAMAGE @43
+      SAY DYING @44
+      SAY HURT @45
+      SAY AREA_FOREST @46
+      SAY AREA_CITY @47
+      SAY AREA_DUNGEON @48
+      SAY AREA_DAY @49
+      SAY AREA_NIGHT @50
+      SAY SELECT_COMMON1 @51
+      SAY SELECT_COMMON2 @52
+      SAY SELECT_COMMON3 @53
+      SAY SELECT_COMMON4 @54
+      SAY SELECT_COMMON5 @55
+      SAY SELECT_COMMON6 @56
+      SAY SELECT_ACTION1 @57
+      SAY SELECT_ACTION2 @58
+      SAY SELECT_ACTION3 @59
+      SAY SELECT_ACTION4 @60
+      SAY SELECT_ACTION5 @61
+      SAY SELECT_ACTION6 @62
+      SAY SELECT_ACTION7 @63
+      SAY SELECT_RARE1 @64
+      SAY SELECT_RARE2 @65
+      SAY CRITICAL_HIT @66
+      SAY CRITICAL_MISS @67
+      SAY TARGET_IMMUNE @68
+      SAY INVENTORY_FULL @69
+      SAY PICKED_POCKET @70
+      SAY HIDDEN_IN_SHADOWS @71
+      SAY SPELL_DISRUPTED @72
+      SAY SET_A_TRAP @73
+    
+    
+    // Appends
+    APPEND ~pdialog.2da~  ~IYLOS LK#IYS LK#IYSJ LK#IYSD LK#IYLP LK#IYLJ LK#IYTD LK#IYLO~
+      UNLESS ~IYLOS~
+    
+    APPEND ~interdia.2da~ ~IYLOS BLK#ISO BLK#IYL~
+      UNLESS ~IYLOS~
+    
+
+    // Epilogues
+    COPY ~iylos/2da/lk#iylo1.2da~ ~override/lk#iylo1.2da~
+      REPLACE ~99999~ @74
+
+    COPY ~iylos/2da/lk#iylo1.2da~ ~override/lk#iylo2.2da~
+      REPLACE ~99999~ @75
+
+    COPY ~iylos/2da/lk#iylo1.2da~ ~override/lk#iylo3.2da~
+      REPLACE ~99999~ @76
+    
+    
+    // Audio
+    COPY ~iylos/audio/lk#blank.mus~ ~music~
+    
+    COPY_EXISTING ~songlist.2da~ ~override~
+      SET_2DA_ENTRY 0 2 3 ~lk#blank.mus~
+    
+    LAF HANDLE_AUDIO END
+    
+
+
+// --------------------------------------------
+// Extended Content (PIDs & Friendship)
+// --------------------------------------------
+BEGIN @77
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @78
+    // Override script
+    COMPILE ~iylos/extended/lk#iylo.baf~
+      USING ~iylos/translations/%LANGUAGE%/lk#iylo_extended.tra~
+    COMPILE ~iylos/extended/lk#iylj.d~
+      USING ~iylos/translations/%LANGUAGE%/lk#iylj_extended.tra~
+
+// --------------------------------------------
+// Iylos' Talk Timers
+// --------------------------------------------
+// 15 minutes
+BEGIN @79
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
+  SUBCOMPONENT @81
+    COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
+      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~900 IYLOS_TIMER~
+
+// 20 minutes
+BEGIN @82
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
+  SUBCOMPONENT @81
+    COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
+      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1200 IYLOS_TIMER~
+
+// 30 minutes
+BEGIN @83
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
+  SUBCOMPONENT @81
+    COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
+      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1800 IYLOS_TIMER~
+
+// 45 minutes
+BEGIN @84
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
+  SUBCOMPONENT @81
+    COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
+      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~2700 IYLOS_TIMER~
+
+// 60 minutes
+BEGIN @85
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
+  SUBCOMPONENT @81
+    COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
+      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~3600 IYLOS_TIMER~
+
+// --------------------------------------------
+// Alternate Iylos portrait by Ilmatar
+// --------------------------------------------
+// Component setup
+BEGIN @86
+  REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @87
+
+  ACTION_IF GAME_IS ~bg2ee~ BEGIN
+    COPY ~iylos/alternate/ee~ ~override~
+  END ELSE BEGIN
+    COPY ~iylos/alternate/bg2~ ~override~
+  END

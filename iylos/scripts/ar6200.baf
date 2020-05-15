@@ -1,0 +1,35 @@
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Iylos")
+    Global("LK#IylosBio","GLOBAL",0)
+    GlobalGT("LK#IylosHappiness","GLOBAL",4)
+    Global("PlayerChoseEssence","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosBio","GLOBAL",1)
+    TextScreen("LK#IYLO1")
+END
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Iylos")
+    Global("LK#IylosBio","GLOBAL",0)
+    GlobalGT("LK#IylosHappiness","GLOBAL",4)
+    Global("PlayerChoseEssence","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosBio","GLOBAL",1)
+    TextScreen("LK#IYLO2")
+END
+
+
+IF
+    Global("StartEndBios","AR6200",1)
+    InParty("Iylos")
+    Global("LK#IylosBio","GLOBAL",0)
+    GlobalLT("LK#IylosHappiness","GLOBAL",5)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosBio","GLOBAL",1)
+    TextScreen("LK#IYLO3")
+END

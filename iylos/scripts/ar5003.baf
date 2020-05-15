@@ -1,0 +1,7 @@
+IF
+    Global("LK#IylosExists","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosExists","GLOBAL",1)
+    CreateCreature("lk#iylos",[1168.905],1)
+END

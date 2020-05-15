@@ -1,0 +1,456 @@
+// -------------------------------------
+// Initial Meeting
+// -------------------------------------
+IF
+    See(Player1)
+    NumTimesTalkedTo(0)
+    Global("LK#IylosJoinDialogue","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("LK#IylosJoinDialogue","GLOBAL",60)
+    SetGlobal("LK#IylosJoinDialogue","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("LK#IylosJoinDialogue","GLOBAL")
+    See(Player1)
+    NumTimesTalkedTo(0)
+    Global("LK#IylosJoinDialogue","GLOBAL",1)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("lk_theme")
+    Dialogue(Player1)
+END
+
+// -------------------------------------
+// Balthazar Scene
+// -------------------------------------
+IF
+    InParty("Iylos")
+    Global("LK#IylosDialogueFadeNow","GLOBAL",1)
+    !InMyArea("BALTH")
+THEN
+  RESPONSE #100
+    IncrementGlobal("LK#IylosDialogueFadeNow","GLOBAL",1)
+END
+
+IF
+    InParty("Iylos")
+    Global("LK#IylosDialogueFadeNow","GLOBAL",2)
+    !InMyArea("BALTH")
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    StartDialogue("LK#IYLJ","Player1")
+END
+
+// -------------------------------------
+// Miscellaneous Changes
+// -------------------------------------
+// Swapping letter of Iylos likes the PC
+IF
+    GlobalGT("LK#IylosHappiness","GLOBAL",3)
+    Global("LK#IylosLetterSwapped","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosLetterSwapped","GLOBAL",1)
+    TakeItemReplace("lk#ilet2","lk#ilet1","Iylos")
+END
+
+
+ // Soundset changes for if Iylos likes the PC
+IF
+    GlobalGT("LK#IylosHappiness","GLOBAL",4)
+    !Global("LK#IylosSoundsetHappy","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosSoundsetHappy","GLOBAL",1)
+    SetGlobal("LK#IylosSoundsetUnhappy","GLOBAL",0)
+    SetPlayerSound(Myself,@0,LEADER)
+    SetPlayerSound(Myself,@1,BORED)
+    SetPlayerSound(Myself,@2,SELECT_COMMON3)
+    SetPlayerSound(Myself,@3,SELECT_COMMON5)
+    SetPlayerSound(Myself,@4,SELECT_COMMON6)
+    SetPlayerSound(Myself,@5,SELECT_ACTION2)
+    SetPlayerSound(Myself,@6,SELECT_ACTION4)
+    SetPlayerSound(Myself,@7,SELECT_ACTION6)
+    SetPlayerSound(Myself,@8,SELECT_RARE2)
+END
+
+
+ // Soundset changes for if Iylos doesn't like the PC
+IF
+    GlobalLT("LK#IylosHappiness","GLOBAL",5)
+    Global("LK#IylosSoundsetHappy","GLOBAL",1)
+    !GLOBAL("LK#IylosSoundesetUnhappy","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosSoundsetHappy","GLOBAL",0)
+    SetPlayerSound(Myself,@9,LEADER)
+    SetPlayerSound(Myself,@10,BORED)
+    SetPlayerSound(Myself,@11,SELECT_COMMON3)
+    SetPlayerSound(Myself,@12,SELECT_COMMON5)
+    SetPlayerSound(Myself,@13,SELECT_COMMON6)
+    SetPlayerSound(Myself,@14,SELECT_ACTION2)
+    SetPlayerSound(Myself,@15,SELECT_ACTION4)
+    SetPlayerSound(Myself,@16,SELECT_ACTION6)
+    SetPlayerSound(Myself,@17,SELECT_RARE2)
+END
+
+// -------------------------------------
+//  PC Dialogue (2)
+// -------------------------------------
+IF
+    InParty(Myself)
+    Global("LK#IylosFirstTimerSet","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosFirstTimerSet","GLOBAL",1)
+    RealSetGlobalTimer("LK#IylosTalksTimer","GLOBAL",IYLOS_TIMER)
+END
+
+IF
+    RealGlobalTimerExpired("LK#IylosTalksTimer","GLOBAL")
+    Global("LK#IylosFirstTimerSet","GLOBAL",1)
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+THEN   
+  RESPONSE #100
+    SetGlobal("LK#IylosFirstTimerSet","GLOBAL",2)
+    SetGlobal("LK#IylosL_Talks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("LK#IylosTalksTimer","GLOBAL")
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("LK#IylosL_Talks","GLOBAL",2)
+THEN
+  RESPONSE #100
+    IncrementGlobal("LK#IylosL_Talks","GLOBAL",1)
+END
+
+IF
+    RealGlobalTimerExpired("LK#IylosTalksTimer","GLOBAL")
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+      Global("LK#IylosL_Talks","GLOBAL",1)
+      Global("LK#IylosL_Talks","GLOBAL",3)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("lk_them2") 
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+// -------------------------------------
+//  Reputation Dialogues (2)
+// -------------------------------------
+IF
+    ReputationGT([PC],15)
+    See(Player1)
+    InParty(Myself)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    Global("LK#IylosReputationGoodTalk","GLOBAL",0)
+    CombatCounter(0)
+    !See([ENEMY])
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosReputationGoodTalk","GLOBAL",1)
+END
+
+IF
+    ReputationLT([PC],6)
+    See(Player1)
+    InParty(Myself)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    Global("LK#IylosReputationBadTalk","GLOBAL",0)
+    CombatCounter(0)
+    !See([ENEMY])
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosReputationBadTalk","GLOBAL",1)
+END
+
+IF
+    OR(2)
+      Global("LK#IylosReputationGoodTalk","GLOBAL",1)
+      Global("LK#IylosReputationBadTalk","GLOBAL",1)
+    See(Player1)
+    InParty(Myself)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("lk_them2") 
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+
+// -------------------------------------
+//  Plot Dialogues (4)
+// -------------------------------------
+// Iylos' floating dialogue: What Next
+IF
+    Global("LK#IylosWhatCheck","GLOBAL",0)
+    OR(2)
+      Dead("Abazigal1")
+      Dead("Sendai")
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("LK#IylosWhatNextDialogue","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosWhatCheck","GLOBAL",1)
+    RealSetGlobalTimer("LK#IylosWhatNextTimer","GLOBAL",360)
+END
+
+IF
+    Global("LK#IylosWhatCheck","GLOBAL",1)
+    GlobalTimerExpired("LK#IylosWhatNextTimer","GLOBAL")
+    OR(2)
+      Dead("Abazigal1")
+      Dead("Sendai")
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("LK#IylosWhatNextDialogue","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosWhatNextDialogue","GLOBAL",1)
+END
+
+IF
+    GlobalTimerExpired("LK#IylosWhatNextTimer","GLOBAL")
+    !AreaType(DUNGEON)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    See(Player1)
+    CombatCounter(0)
+    !See([ENEMY])
+    Global("LK#IylosWhatNextDialogue","GLOBAL",1)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("lk_theme") 
+    MoveToObject(Player1)
+    StartDialogueNoSet(Player1)
+END
+
+// Balthazar Dead
+IF 
+    CombatCounter(0)
+    !See([ENEMY])
+    See(Player1)
+    AreaCheck("AR5505")
+    Dead("Balth")
+    InParty(Myself)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    Global("LK#IylosBalthazarDead","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosBalthazarDead","GLOBAL",1)
+END
+
+IF
+    CombatCounter(0)
+    See(Player1)
+    AreaCheck("AR5505")
+    Dead("Balth")
+    InParty(Myself)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    Global("LK#IylosBalthazarDead","GLOBAL",1)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("lk_them2")
+    StartDialogueNoSet(Player1)
+END
+
+// -------------------------------------
+//  Scenery Interjections (3)
+// -------------------------------------
+ // Amkethran
+IF
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR5500") 
+    Global("LK#IylosAmkethran","GLOBAL",0)
+    Global("LK#IylosAmkethranCheck","GLOBAL",0)
+    !Global("LK#IylosTalksLessOften","GLOBAL",1)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("LK#IylosAmkethranTimer","GLOBAL",120)
+    SetGlobal("LK#IylosAmkethranCheck","GLOBAL",1)
+END
+    
+IF 
+    GlobalTimerExpired("LK#IylosAmkethranTimer","GLOBAL")
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR5500")
+    Global("LK#IylosAmkethran","GLOBAL",0)
+    Global("LK#IylosAmkethranCheck","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosAmkethran","GLOBAL",1)
+END
+
+IF
+    GlobalTimerExpired("LK#IylosAmkethranTimer","GLOBAL")
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR5500")
+    Global("LK#IylosAmkethran","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+ // Leila Banter
+IF
+    CombatCounter(0)
+    !See([ENEMY])
+    InMyArea("AMwenc01") 
+    Range("AMwenc01",30) 
+    InParty("Iylos") 
+    Global("LK#IylosLeila","GLOBAL",0) 
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosLeila","GLOBAL",1)
+END
+
+IF
+    CombatCounter(0)
+    !See([ENEMY])
+    InMyArea("AMwenc01") 
+    Range("AMwenc01",30) 
+    InParty("Iylos") 
+    Global("LK#IylosLeila","GLOBAL",1)
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+THEN
+  RESPONSE #100
+    MoveToObject("AMwenc01")
+    StartDialogueNoSet("AMwenc01")
+END
+
+ // Watcher's Keep 1
+IF
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR3000") 
+    Global("LK#IylosWatchers1","GLOBAL",0)
+    Global("LK#IylosWatchers1Check","GLOBAL",0)
+    !Global("LK#IylosTalksLessOften","GLOBAL",1)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("LK#IylosWatchers1Timer","GLOBAL",60)
+    SetGlobal("LK#IylosWatchers1Check","GLOBAL",1)
+END
+
+IF
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR3000") 
+    Global("LK#IylosWatchers1","GLOBAL",0)
+    Global("LK#IylosWatchers1Check","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosWatchers1","GLOBAL",1)
+END
+    
+IF 
+    GlobalTimerExpired("LK#IylosWatchers1Timer","GLOBAL")
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR3000")
+    Global("LK#IylosWatchers1","GLOBAL",1)
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END
+
+ // Watcher's Keep 6
+IF
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    !InMyArea("shugod01") 
+    AreaCheck("AR3000")
+    Global("LK#IylosWatchers1","GLOBAL",2)
+    Global("LK#IylosWatchers6","GLOBAL",0) 
+    Global("LK#IylosWatchers6Check","GLOBAL",0)
+    !Global("LK#IylosTalksLessOften","GLOBAL",1)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("LK#IylosWatchers6Timer","GLOBAL",60)
+    SetGlobal("LK#IylosWatchers6Check","GLOBAL",1)
+END
+
+IF
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    !InMyArea("shugod01")
+    Global("LK#IylosWatchers6","GLOBAL",0)
+    Global("LK#IylosWatchers6Check","GLOBAL",1)
+    AreaCheck("AR3000")
+THEN
+  RESPONSE #100
+    SetGlobal("LK#IylosWatchers6","GLOBAL",1)
+END
+    
+IF 
+    !StateCheck("Iylos",CD_STATE_NOTVALID)
+    InParty("Iylos")
+    !Dead("Iylos")
+    AreaCheck("AR3000")
+    Global("LK#IylosWatchers6","GLOBAL",1)
+    GlobalTimerExpired("LK#IylosWatchers6Timer","GLOBAL")
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+END

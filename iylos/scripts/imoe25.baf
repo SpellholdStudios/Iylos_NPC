@@ -1,0 +1,54 @@
+  // Imoen/PC about Iylos
+IF
+    InParty("Iylos") 
+    !Dead("Iylos")
+    InParty("Imoen2")
+    !Dead("Imoen2")
+    !StateCheck("Imoen2",CD_STATE_NOTVALID)
+    GlobalGT("LK#IylosImoen","GLOBAL",3)
+    Global("LK#IylosImmyTalkCheck","GLOBAL",0)
+    !AreaType(DUNGEON)
+    CombatCounter(0)
+    InParty(Myself)
+    See(Player1)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("LK#IylosImmyTalkTimer","GLOBAL",900)
+    SetGlobal("LK#IylosImmyTalkCheck","GLOBAL",1)
+END
+
+IF
+    GlobalTimerExpired("LK#IylosImmyTalkTimer","GLOBAL")
+    InParty("Iylos") 
+    !Dead("Iylos")
+    InParty("Imoen2")
+    !Dead("Imoen2")
+    !StateCheck("Imoen2",CD_STATE_NOTVALID)
+    Global("LK#IylosImmyTalkCheck","GLOBAL",1)
+    Global("LK#Iylos_ImmyTalk","GLOBAL",0)
+    !AreaType(DUNGEON)
+    CombatCounter(0)
+    InParty(Myself)
+    See(Player1)
+THEN
+  RESPONSE #100
+    SetGlobal("LK#Iylos_ImmyTalk","GLOBAL",1)
+END
+
+IF
+    GlobalTimerExpired("LK#IylosImmyTalkTimer","GLOBAL")
+    InParty("Iylos") 
+    !Dead("Iylos")
+    InParty("Imoen2")
+    !Dead("Imoen2")
+    !StateCheck("Imoen2",CD_STATE_NOTVALID)
+    Global("LK#Iylos_ImmyTalk","GLOBAL",1)
+    !AreaType(DUNGEON)
+    CombatCounter(0)
+    InParty(Myself)
+    See(Player1)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    Interact(Player1)
+END

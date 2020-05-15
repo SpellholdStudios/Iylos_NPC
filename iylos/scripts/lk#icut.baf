@@ -1,0 +1,22 @@
+IF
+    True()
+THEN
+  RESPONSE #100
+    CutSceneId(Player1)
+    Unlock("Door08")
+    ActionOverride("Iylos",MoveToPoint([893.1494]))
+    OpenDoor("Door08")
+    Wait(2)
+    FadeToColor([20.0],0)
+    Wait(3)
+    ActionOverride("Iylos",FaceObject(Player1))
+    FadeFromColor([20.0],0)
+    Wait(1)
+    ActionOverride("Iylos",MoveToObject(Player1))
+    CloseDoor("Door08")
+    Lock("Door08")
+    IncrementGlobal("LK#IylosDialogueFadeNow","GLOBAL",1)
+    Wait(1)
+    EndCutSceneMode()
+    ActionOverride("Iylos",StartDialogueNoSet(Player1))
+END
