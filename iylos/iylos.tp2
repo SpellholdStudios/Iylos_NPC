@@ -78,20 +78,37 @@ BEGIN @1
 
 /* Ascension component "Ascension main component: rewritten Chapter 10" - DESIGNATED 0 */
     ACTION_IF MOD_IS_INSTALLED ~Ascension.tp2~ 0 BEGIN
+      ACTION_IF GAME_IS ~bgt tob~ THEN BEGIN
       // Get state for IRENIC2 %iylos_irenic2% 
 /* @456 = ~So my ungrateful sister, you finally stand by my side. I shall deal with your treachery afterwards. As for you, <CHARNAME>, Melissan has granted me the power to rip the divinity from your body. The first thing I shall feel in an eon shall be pleasure as I watch your corpse turn to dust.~ */
-      OUTER_SET iylos_irenic2 = STATE_WHICH_SAYS 456 IN ~ascension/lang/%s/iren_bodhi.tra~ FROM ~IRENIC2~
+        OUTER_SET iylos_irenic2 = STATE_WHICH_SAYS 456 IN ~ascension/lang/%s/iren_bodhi.tra~ FROM ~IRENIC2~
       // Get state for BALTH2 %iylos_balth2_1% 
 /* @1007 = ~She has, no doubt, guarded the pools in some fashion... but it is the only way to continue that I can think of. Short of standing here and watching her become a goddess, that is.~ */
-      OUTER_SET iylos_balth2_1 = STATE_WHICH_SAYS 1007 IN ~ascension/lang/%s/pool_banter.tra~ FROM ~BALTH2~
+        OUTER_SET iylos_balth2_1 = STATE_WHICH_SAYS 1007 IN ~ascension/lang/%s/pool_banter.tra~ FROM ~BALTH2~
+      END ELSE BEGIN
+      // Get state for IRENIC2 %iylos_irenic2% 
+/* @456 = ~So my ungrateful sister, you finally stand by my side. I shall deal with your treachery afterwards. As for you, <CHARNAME>, Melissan has granted me the power to rip the divinity from your body. The first thing I shall feel in an eon shall be pleasure as I watch your corpse turn to dust.~ */
+        OUTER_SET iylos_irenic2 = STATE_WHICH_SAYS 456 IN ~weidu_external/lang/ascension/%s/iren_bodhi.tra~ FROM ~IRENIC2~
+      // Get state for BALTH2 %iylos_balth2_1% 
+/* @1007 = ~She has, no doubt, guarded the pools in some fashion... but it is the only way to continue that I can think of. Short of standing here and watching her become a goddess, that is.~ */
+        OUTER_SET iylos_balth2_1 = STATE_WHICH_SAYS 1007 IN ~weidu_external/lang/ascension/%s/pool_banter.tra~ FROM ~BALTH2~
+
+      END 
+
       COMPILE EVALUATE_BUFFER ~iylos/dialogue/crossmod/ascension.d~
     END
 
 /* Ascension component "Redeemable Balthazar" - DESIGNATED 10 */
     ACTION_IF MOD_IS_INSTALLED ~Ascension.tp2~ 10 BEGIN
+      ACTION_IF GAME_IS ~bgt tob~ THEN BEGIN
       // Get state for BALTH2 %iylos_balth2_2% 
 /* @1011 = ~And there is nothing that I ever wanted more. I choose to become a mortal gladly, and with all my heart. To walk the earth without that dark burden twisting my soul... I... I cannot even imagine...~ */
-      OUTER_SET iylos_balth2_2 = STATE_WHICH_SAYS 1011 IN ~ascension/lang/%s/balth_finsol.tra~ FROM ~BALTH2~
+        OUTER_SET iylos_balth2_2 = STATE_WHICH_SAYS 1011 IN ~ascension/lang/%s/balth_finsol.tra~ FROM ~BALTH2~
+      END ELSE BEGIN
+      // Get state for BALTH2 %iylos_balth2_2% 
+/* @1011 = ~And there is nothing that I ever wanted more. I choose to become a mortal gladly, and with all my heart. To walk the earth without that dark burden twisting my soul... I... I cannot even imagine...~ */
+        OUTER_SET iylos_balth2_2 = STATE_WHICH_SAYS 1011 IN ~weidu_external/lang/ascension/%s/balth_finsol.tra~ FROM ~BALTH2~
+      END 
       COMPILE EVALUATE_BUFFER ~iylos/dialogue/crossmod/ascension_10.d~
     END
     
