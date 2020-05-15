@@ -19,5 +19,5 @@
 [Download the mod at Spellhold Studios](http://www.shsforums.net/files/file/539-iylos/).<br>
 
 
-# Iylos_NPC
+# Iylos NPC
 This mod adds the joinable monk Iylos Mirdan to the ToB part of Baldur's Gate II (BGII, BGT, BGII:EE, EET). He is a joinable NPC sent by Balthazar to ascertain the main character's intentions and motivations. You can find Iylos in the Saradush Inn, where he will approach you.
