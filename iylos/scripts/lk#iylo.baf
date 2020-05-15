@@ -67,15 +67,15 @@ THEN
   RESPONSE #100
     SetGlobal("LK#IylosSoundsetHappy","GLOBAL",1)
     SetGlobal("LK#IylosSoundsetUnhappy","GLOBAL",0)
-    SetPlayerSound(Myself,@0,LEADER)
-    SetPlayerSound(Myself,@1,BORED)
-    SetPlayerSound(Myself,@2,SELECT_COMMON3)
-    SetPlayerSound(Myself,@3,SELECT_COMMON5)
-    SetPlayerSound(Myself,@4,SELECT_COMMON6)
-    SetPlayerSound(Myself,@5,SELECT_ACTION2)
-    SetPlayerSound(Myself,@6,SELECT_ACTION4)
-    SetPlayerSound(Myself,@7,SELECT_ACTION6)
-    SetPlayerSound(Myself,@8,SELECT_RARE2)
+    SetPlayerSound(Myself,@10000,LEADER)
+    SetPlayerSound(Myself,@10001,BORED)
+    SetPlayerSound(Myself,@10002,SELECT_COMMON3)
+    SetPlayerSound(Myself,@10003,SELECT_COMMON5)
+    SetPlayerSound(Myself,@10004,SELECT_COMMON6)
+    SetPlayerSound(Myself,@10005,SELECT_ACTION2)
+    SetPlayerSound(Myself,@10006,SELECT_ACTION4)
+    SetPlayerSound(Myself,@10007,SELECT_ACTION6)
+    SetPlayerSound(Myself,@10008,SELECT_RARE2)
 END
 
 
@@ -87,15 +87,15 @@ IF
 THEN
   RESPONSE #100
     SetGlobal("LK#IylosSoundsetHappy","GLOBAL",0)
-    SetPlayerSound(Myself,@9,LEADER)
-    SetPlayerSound(Myself,@10,BORED)
-    SetPlayerSound(Myself,@11,SELECT_COMMON3)
-    SetPlayerSound(Myself,@12,SELECT_COMMON5)
-    SetPlayerSound(Myself,@13,SELECT_COMMON6)
-    SetPlayerSound(Myself,@14,SELECT_ACTION2)
-    SetPlayerSound(Myself,@15,SELECT_ACTION4)
-    SetPlayerSound(Myself,@16,SELECT_ACTION6)
-    SetPlayerSound(Myself,@17,SELECT_RARE2)
+    SetPlayerSound(Myself,@10009,LEADER)
+    SetPlayerSound(Myself,@10010,BORED)
+    SetPlayerSound(Myself,@10011,SELECT_COMMON3)
+    SetPlayerSound(Myself,@10012,SELECT_COMMON5)
+    SetPlayerSound(Myself,@10013,SELECT_COMMON6)
+    SetPlayerSound(Myself,@10014,SELECT_ACTION2)
+    SetPlayerSound(Myself,@10015,SELECT_ACTION4)
+    SetPlayerSound(Myself,@10016,SELECT_ACTION6)
+    SetPlayerSound(Myself,@10017,SELECT_RARE2)
 END
 
 // -------------------------------------

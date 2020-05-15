@@ -3,12 +3,42 @@
 // --------------------------------------------
 // Basics
 BACKUP ~iylos/backup~
-AUTHOR ~Liam Esler (K'aeloree) - kae@spellholdstudios.net~
+//AUTHOR ~Liam Esler (K'aeloree) - kae@spellholdstudios.net~
+SUPPORT ~http://www.shsforums.net/forum/352-iylos/~
 ASK_EVERY_COMPONENT
 // Version
-VERSION ~2.5~
+VERSION ~2.6~
 // Readme
 README ~iylos/iylos_readme.html~
+
+
+ALWAYS
+
+  ACTION_IF NOT VARIABLE_IS_SET bg2_chapter THEN BEGIN // check to make this happen only once per install
+
+/* not really necessary because no chapter variable used but I'll put this here nevertheless */
+    ACTION_IF GAME_IS ~eet~ BEGIN
+      OUTER_SET bg2_chapter = 12
+    END ELSE BEGIN
+      OUTER_SET bg2_chapter = 0
+    END
+    OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
+      OUTER_SET bg2_chapter = bg2_chapter + 1
+      OUTER_SPRINT name_source ~bg2_chapter_%i%~
+      OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+    END
+
+    // convert strings to UTF-8 for BGEE/BG2EE
+    ACTION_DEFINE_ARRAY lk#reload BEGIN setup END
+    LAF HANDLE_CHARSETS 
+	INT_VAR infer_charsets = 1 
+	STR_VAR tra_path = ~iylos/translations~
+	reload_array = lk#reload 
+    END
+
+  END
+
+END
 
 // Translations
 AUTO_TRA ~iylos/translations/%s~
@@ -22,7 +52,7 @@ LANGUAGE ~English~
 // --------------------------------------------
 // Component setup
 BEGIN @1
-  REQUIRE_PREDICATE GAME_IS ~tob bg2ee bgt~ @88
+  REQUIRE_PREDICATE GAME_IS ~tob bg2ee bgt eet~ @88
 
     
     // Adds custom IsValidForPartyDialogue state used throughout Iylos
@@ -53,6 +83,7 @@ BEGIN @1
     // Compiling other scripts
     COMPILE ~iylos/scripts/lk#icut.baf~
     COMPILE ~iylos/scripts/lk#iylo.baf~
+      USING ~iylos/translations/%LANGUAGE%/lk#iylo_baf.tra~
     EXTEND_TOP ~ar6200.bcs~ ~iylos/scripts/ar6200.baf~
     EXTEND_BOTTOM ~ar5003.bcs~ ~iylos/scripts/ar5003.baf~
     EXTEND_BOTTOM ~imoe25.bcs~ ~iylos/scripts/imoe25.baf~
@@ -130,7 +161,7 @@ BEGIN @1
     //Copying images and creatures
     COPY ~iylos/images~ ~override~
     
-    ACTION_IF GAME_IS ~bg2ee~ BEGIN
+    ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
       COPY ~iylos/portrait/ee~ ~override~
     END ELSE BEGIN
       COPY ~iylos/portrait/bg2~ ~override~
@@ -189,7 +220,7 @@ BEGIN @1
     
     
     // Appends
-    APPEND ~pdialog.2da~  ~IYLOS LK#IYS LK#IYSJ LK#IYSD LK#IYLP LK#IYLJ LK#IYTD LK#IYLO~
+    APPEND ~pdialog.2da~  ~IYLOS LK#IYSP LK#IYSJ LK#IYSD LK#IYLP LK#IYLJ LK#IYTD LK#IYLO~
       UNLESS ~IYLOS~
     
     APPEND ~interdia.2da~ ~IYLOS BLK#ISO BLK#IYL~
@@ -224,9 +255,9 @@ BEGIN @77
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @78
     // Override script
     COMPILE ~iylos/extended/lk#iylo.baf~
-      USING ~iylos/translations/%LANGUAGE%/lk#iylo_extended.tra~
-    COMPILE ~iylos/extended/lk#iylj.d~
-      USING ~iylos/translations/%LANGUAGE%/lk#iylj_extended.tra~
+      USING ~iylos/translations/%LANGUAGE%/lk#iylo_baf.tra~
+    COMPILE ~iylos/extended/lk#iylj_extended.d~
+//      USING ~iylos/translations/%LANGUAGE%/lk#iylj_extended.tra~
 
 // --------------------------------------------
 // Iylos' Talk Timers
@@ -236,35 +267,45 @@ BEGIN @79
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
-      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~900 IYLOS_TIMER~
+//      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~900 IYLOS_TIMER~
+    REPLACE_TEXTUALLY ~^.+[ %TAB%]\(IYLOS_TIMER[ %TAB%%LNL%%MNL%%WNL%]+\)~ ~900 \1~
+      BUT_ONLY
 
 // 20 minutes
 BEGIN @82
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
-      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1200 IYLOS_TIMER~
+//      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1200 IYLOS_TIMER~
+    REPLACE_TEXTUALLY ~^.+[ %TAB%]\(IYLOS_TIMER[ %TAB%%LNL%%MNL%%WNL%]+\)~ ~1200 \1~
+      BUT_ONLY
 
 // 30 minutes
 BEGIN @83
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
-      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1800 IYLOS_TIMER~
+//      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~1800 IYLOS_TIMER~
+    REPLACE_TEXTUALLY ~^.+[ %TAB%]\(IYLOS_TIMER[ %TAB%%LNL%%MNL%%WNL%]+\)~ ~1800 \1~
+      BUT_ONLY
 
 // 45 minutes
 BEGIN @84
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
-      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~2700 IYLOS_TIMER~
+//      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~2700 IYLOS_TIMER~
+    REPLACE_TEXTUALLY ~^.+[ %TAB%]\(IYLOS_TIMER[ %TAB%%LNL%%MNL%%WNL%]+\)~ ~2700 \1~
+      BUT_ONLY
 
 // 60 minutes
 BEGIN @85
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
-      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~3600 IYLOS_TIMER~
+//      REPLACE_TEXTUALLY ~3600 IYLOS_TIMER~ ~3600 IYLOS_TIMER~
+    REPLACE_TEXTUALLY ~^.+[ %TAB%]\(IYLOS_TIMER[ %TAB%%LNL%%MNL%%WNL%]+\)~ ~3600 \1~
+      BUT_ONLY
 
 // --------------------------------------------
 // Alternate Iylos portrait by Ilmatar
@@ -273,8 +314,12 @@ BEGIN @85
 BEGIN @86
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @87
 
-  ACTION_IF GAME_IS ~bg2ee~ BEGIN
-    COPY ~iylos/alternate/ee~ ~override~
+  ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
+    COPY ~iylos/alternate/ee/lk#ilml.bmp~ ~override/lk#iyll.bmp~
+    COPY ~iylos/alternate/ee/lk#ilmm.bmp~ ~override/lk#iylm.bmp~
+    COPY ~iylos/alternate/ee/lk#ilms.bmp~ ~override/lk#iyls.bmp~
   END ELSE BEGIN
-    COPY ~iylos/alternate/bg2~ ~override~
+    COPY ~iylos/alternate/bg2/lk#ilml.bmp~ ~override/lk#iyll.bmp~
+    COPY ~iylos/alternate/bg2/lk#ilmm.bmp~ ~override/lk#iylm.bmp~
+    COPY ~iylos/alternate/bg2/lk#ilms.bmp~ ~override/lk#iyls.bmp~
   END

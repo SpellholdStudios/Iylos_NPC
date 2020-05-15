@@ -12,11 +12,13 @@
 // Plot 3--4 Bhaalspawn Dead
 // Plot 4--Balthazar Dead
 
+/* taken out - this only clutters the override folder.
 // SoA Dialogues
 BEGIN ~LK#IYSO~
 BEGIN ~BLK#ISO~
 BEGIN ~LK#IYSJ~
 BEGIN ~LK#IYSP~
+*/
 
 // ToB Non-party dialogue
 BEGIN ~LK#IYLO~
