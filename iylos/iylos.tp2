@@ -46,7 +46,7 @@ LANGUAGE ~English~
 // Iylos NPC Mod
 // --------------------------------------------
 // Component setup
-BEGIN @1
+BEGIN @1 LABEL lk#-Iylos-Main
   REQUIRE_PREDICATE GAME_IS ~tob bg2ee bgt eet~ @88
 
     
@@ -279,7 +279,7 @@ BEGIN @1
 // --------------------------------------------
 // Extended Content (PIDs & Friendship)
 // --------------------------------------------
-BEGIN @77
+BEGIN @77 LABEL lk#-Iylos-ExtendedContent
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @78
     // Override script
     COMPILE ~iylos/extended/lk#iylo.baf~
@@ -291,7 +291,7 @@ BEGIN @77
 // Iylos' Talk Timers
 // --------------------------------------------
 // 15 minutes
-BEGIN @79
+BEGIN @79 LABEL lk#-Iylos-Talk-Timer-15
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
@@ -300,7 +300,7 @@ BEGIN @79
       BUT_ONLY
 
 // 20 minutes
-BEGIN @82
+BEGIN @82 LABEL lk#-Iylos-Talk-Timer-20
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
@@ -309,7 +309,7 @@ BEGIN @82
       BUT_ONLY
 
 // 30 minutes
-BEGIN @83
+BEGIN @83 LABEL lk#-Iylos-Talk-Timer-30
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
@@ -318,7 +318,7 @@ BEGIN @83
       BUT_ONLY
 
 // 45 minutes
-BEGIN @84
+BEGIN @84 LABEL lk#-Iylos-Talk-Timer-45
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
@@ -327,7 +327,7 @@ BEGIN @84
       BUT_ONLY
 
 // 60 minutes
-BEGIN @85
+BEGIN @85 LABEL lk#-Iylos-Talk-Timer-60
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @80
   SUBCOMPONENT @81
     COPY_EXISTING ~gtimes.ids~ ~override/gtimes.ids~
@@ -339,7 +339,7 @@ BEGIN @85
 // Alternate Iylos portrait by Ilmatar
 // --------------------------------------------
 // Component setup
-BEGIN @86
+BEGIN @86 LABEL lk#-Iylos-Portrait-Ilmatar
   REQUIRE_COMPONENT ~iylos.tp2~             ~0~ @87
 
   ACTION_IF GAME_IS ~bg2ee eet~ BEGIN
