@@ -1,16 +1,11 @@
-// --------------------------------------------
-// Mod setup
-// --------------------------------------------
-// Basics
 BACKUP ~iylos/backup~
 //AUTHOR ~Liam Esler (K'aeloree) - kae@spellholdstudios.net~
 SUPPORT ~http://www.shsforums.net/forum/352-iylos/~
-ASK_EVERY_COMPONENT
-// Version
-VERSION ~2.7~
-// Readme
+VERSION ~2.7.1~
+
 README ~iylos/iylos_readme.html~
 
+ASK_EVERY_COMPONENT
 
 ALWAYS
 
